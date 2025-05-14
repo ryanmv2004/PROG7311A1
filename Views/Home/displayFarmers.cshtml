@@ -1,0 +1,111 @@
+﻿@model PROG7311.ViewModels.DisplayViewModel
+
+@{
+    ViewData["Title"] = "Search Products";
+}
+
+<style>
+  .filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  .filters select,
+  .filters input[type="date"],
+  .filters button {
+    padding: 0.5rem;
+    font-size: 1rem;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+  }
+  .filters button {
+    background: #2a5d84;
+    color: white;
+    cursor: pointer;
+    border: none;
+  }
+  .filters button:hover {
+    background: #244a6b;
+  }
+  .product-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  .product-table th,
+  .product-table td {
+    border: 1px solid #ddd;
+    padding: 0.75rem;
+    text-align: left;
+  }
+  .product-table th {
+    background: #f0f0f0;
+  }
+  .no-results {
+    font-style: italic;
+    color: #666;
+  }
+</style>
+
+<h1>Farmers and Products</h1>
+
+<form asp-action="Display" method="get">
+  <div class="filters">
+        <select name="FarmerId">
+            <option value="">-- All Farmers --</option>
+            @foreach (var farmer in Model.Farmers)
+            {
+                var isSelected = Model.SelectedFarmerId.HasValue && Model.SelectedFarmerId.Value == farmer.farmerID;
+
+                <option value="@farmer.farmerID" selected="@(isSelected ? "selected" : null)">
+                    @farmer.name @farmer.surname
+                </option>
+            }
+        </select>
+
+    <input
+      type="date"
+      name="DateAdded"
+      value="@(Model.SelectedDate?.ToString("yyyy-MM-dd") ?? "")" />
+
+        <select name="Category">
+            <option value="">-- All Categories --</option>
+            @foreach (var c in Model.Categories)
+            {
+                var catSelected = c == Model.SelectedCategory;
+
+                <option value="@c" selected="@(catSelected ? "selected" : null)">@c</option>
+            }
+        </select>
+
+
+    <button type="submit">Search</button>
+  </div>
+</form>
+
+@if (Model.Products.Any())
+{
+  <table class="product-table">
+    <thead>
+      <tr>
+        <th>Name</th><th>Description</th><th>Category</th><th>Farmer</th><th>Date Added</th>
+      </tr>
+    </thead>
+    <tbody>
+    @foreach (var p in Model.Products)
+    {
+      <tr>
+        <td>@p.productName</td>
+        <td>@p.productDescription</td>
+        <td>@p.productCategory</td>
+        <td>@p.farmer.name @p.farmer.surname</td>
+        <td>@p.dateAdded.ToString("yyyy-MM-dd")</td>
+      </tr>
+    }
+    </tbody>
+  </table>
+}
+else
+{
+  <p>No products match your criteria.</p>
+}

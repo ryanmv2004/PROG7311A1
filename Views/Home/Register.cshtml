@@ -1,0 +1,103 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin – Register Farmer</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f4f4;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        .register-container {
+            background: #fff;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+
+            .register-container h2 {
+                text-align: center;
+                margin-bottom: 1.5rem;
+                color: #2a5d84;
+            }
+
+            .register-container label {
+                display: block;
+                margin-bottom: 0.5rem;
+                font-weight: bold;
+            }
+
+            .register-container input {
+                width: 100%;
+                padding: 0.5rem;
+                margin-bottom: 1rem;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                font-size: 1rem;
+            }
+
+            .register-container button {
+                width: 100%;
+                padding: 0.75rem;
+                background: #2a5d84;
+                color: #fff;
+                border: none;
+                border-radius: 4px;
+                font-size: 1rem;
+                cursor: pointer;
+            }
+
+                .register-container button:hover {
+                    background: #244a6b;
+                }
+
+        .error {
+            color: #d8000c;
+            background: #ffbaba;
+            padding: 0.75rem;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="register-container">
+        <h2>Register Farmer</h2>
+        <form asp-action="Register" asp-controller="Login" method="post">
+
+            <div id="errorMsg" class="error"></div>
+
+            <label for="firstname">Name</label>
+            <input type="text" id="firstname" name="name" required autocomplete="name" />
+
+            <label for="surname">Surname</label>
+            <input type="text" id="surname" name="surname" required autocomplete="surname" />
+
+            <label for="email">Email Address</label>
+            <input type="email" id="email" name="email" required autocomplete="email" />
+
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" required autocomplete="password" />
+
+            <button type="submit">Register Farmer</button>
+        </form>
+    </div>
+
+</body>
+</html>
